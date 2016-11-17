@@ -1,1 +1,190 @@
-hahffff
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<style type="text/css">
+	.wrap {
+		position: relative;
+		width: 600px;
+		height: 660px;
+		background: url(images/miaov_bg.jpg);
+		margin: 30px auto;
+	}
+	.bj {
+		position: absolute;
+		left: 130px;
+		top: 110px;
+		height: 14px;
+		font: 14px/1 "微软雅黑";
+	}
+	.bj_a {
+		font: bold 16px/1 "微软雅黑";
+		color: #ccc;		
+	}
+	.bj input {
+		background: none;
+		border: none;
+		text-align: center;
+		font: bold 14px/1 "微软雅黑";
+		color: #66666e;
+	}
+	#year {
+		width: 72px;
+		text-align: center;
+	}
+	#mon {
+		width: 44px;
+	}
+	#day {
+		width: 40px;
+	}
+	.bj_b {
+		font: bold 16px/1 "微软雅黑";
+		color: #ccc;
+		padding: 0 9px;
+	}
+	.go {
+		position: absolute;
+		left: 237px;
+		top: 155px;
+		width: 150px;
+		height: 150px;
+	}
+	.now {
+		position: absolute;
+		left: 0;
+		top: 336px;
+		width: 100%;
+		text-align: center;
+		font: bold 14px/1 "微软雅黑";
+		color: #a8cccc;
+	}
+	.now_time {
+		color: yellow;
+	}
+	.time {
+		font: bold 38px/1 "微软雅黑";
+		color: yellow;
+	}
+	.time_day {
+		position: absolute;
+		right: 430px;
+		top: 404px;
+	}
+	.time_house {
+		position: absolute;
+		left: 217px;
+		top: 404px;
+	}
+	.time_min {
+		position: absolute;
+		left: 348px;
+		top: 404px;
+	}
+	.time_miao {
+		position: absolute;
+		left: 454px;
+		top: 404px;
+	}
+	body {
+		background: url(images/body.gif);
+	}
+</style>
+<script>
+	window.onload = function(){
+		var input = document.querySelectorAll("input");
+		var go = document.getElementsByClassName("go")[0];
+		var time_day = document.getElementsByClassName("time_day")[0];
+		var time_house = document.getElementsByClassName("time_house")[0];
+		var time_min = document.getElementsByClassName("time_min")[0];
+		var time_miao = document.getElementsByClassName("time_miao")[0];
+		var now = document.getElementsByClassName("now")[0];
+		var timer = 0;
+//		timer = setInterval(
+//			function(){
+//				if(toOut(go);) {
+//					toOut(go);
+//				} else {
+//					clearInterval(timer);
+//				}
+//			},100
+//		);
+//		function toOut(obj){
+//			mTween(obj,{opacity:0},600,"easeBoth",function(){
+//				toBack(obj);
+//			});
+//		}
+//		function toBack(obj){
+//			mTween(obj,{opacity:1},600,"easeBoth",function(){
+//				toOut(obj);
+//			});
+//		}
+		auto();
+		function auto(){
+			clearInterval(timer);
+			for(var i = 0; i < input.length-1; i++){
+				if(input[i].value == ""){
+					alert("请输入完整");
+					input[i].focus();
+					return;
+				}
+			}
+			var targetDate = new Date();  //声明输入的时间
+			targetDate.setFullYear(input[0].value,input[1].value - 1,input[2].value);  //输入的时间，获取年，月，日  分别是input的value值
+			setTime(targetDate);  //调用setTime 传入输入的时间 
+			timer = setInterval(  //间隔定时器
+				function(){
+					setTime(targetDate);  //没1s中获取一下当前的时间，把上面的targetDate（上面input中输入的时间）传入到setTime中
+				},1000
+			);
+		};
+		function setTime(targetDate){
+			var nowDate = new Date();  //声明的时间为当前的时间
+			var disTime = targetDate.getTime() - nowDate.getTime();  //p标签里的时间差=输入的时间戳 - 当前的时间戳   为毫秒
+			if(disTime < 0 ){ //当时间差小于0的时候
+				alert("输入时间已过期");  //弹出弹窗
+				clearInterval(timer);   //清除间隔定时器
+			} else {  //当时间差大于0的时候
+				var day = parseInt(disTime/86400000);  //获取的天数，用时间戳差值的时间戳/1000ms*60s*60min*24h =天数
+				var hours = toDB(parseInt((disTime%86400000)/3600000)); //获取小时  ，用时间戳的差值%1000ms*60s*60min*24h = 小数的小时 / 1000ms*60s*60min = 小时
+				var minutes = toDB(parseInt((disTime%3600000)/60000));  //获取分钟  ，用时间戳的差值%1000ms*60s*60min = 小数的分钟 / 1000ms*60s= 分钟
+				var seconds = toDB(parseInt((disTime%60000)/1000));  //获取秒  ，用时间戳的差值%1000ms*60s = 小数的秒数 / 1000ms= 秒
+				console.log(day,hours,minutes,seconds);
+				time_day.innerHTML = day;
+				time_house.innerHTML = hours;
+				time_min.innerHTML = minutes;
+				time_miao.innerHTML = seconds;
+				now.innerHTML = '现在距离 - '+'<span class="now_time">'+input[0].value+'年'+input[1].value+'月'+input[2].value+'日'+'</span>'+ '- 还剩：';
+			}
+			function toDB(nub){
+				return nub < 10?"0"+nub:""+nub;
+			}
+		}
+	};
+</script>
+</head>
+
+<body>
+	<section class="wrap">
+		<div class="bj">
+			<span class="bj_a">请输入：</span>
+			<input type="text" name="" value="2017" id="year" />
+			<span class="bj_b">年</span>
+			<input type="text" name="" value="1" id="mon"/>
+			<span class="bj_b">月</span>
+			<input type="text" name="" value="27" id="day"/>
+			<span class="bj_b">日</span>
+		</div>
+		<div class="go">
+			<img src="images/btn_hover.jpg"/>
+		</div>
+		<div class="now">
+			现在距离 - <span class="now_time">2017年1月27日</span> - 还剩：
+		</div>
+		<div class="time">
+			<span class="time_day">000</span><span class="time_house">00</span><span class="time_min">00</span><span class="time_miao">00</span>
+		</div>
+	</section>
+</body>
+</html>

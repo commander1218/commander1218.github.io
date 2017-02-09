@@ -1,0 +1,244 @@
+﻿<!DOCTYPE html>
+<html>
+<title>脑康</title>
+<meta http-equiv="Content-Type" content="application/xhtml+xml;charset=UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache,must-revalidate">
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta name="format-detection" content="telephone=no, address=no">
+<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no"> 
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style">
+<link href="css/head.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div class="mark">
+		<div class="spinner">
+			<div class="bounce1"></div>
+			<div class="bounce2"></div>
+			<div class="bounce3"></div>
+		</div>
+	</div>
+	<div class="container">
+		<!--头部 start-->
+		<header>
+			<a href="javascript:void(0);"class="adr">北京<img src="images/navi_left@3x.png"></a>			
+			<input class="search"  type="search" name="user_search" placeholder="请输入搜索内容">			
+			<a href="erweima.html" class="erweima"></a>
+			<a href="javascript:void(0);" class="more"></a>
+		</header>
+		<!--头部 end-->
+		<!-- 选择城市开始 -->
+		<div class="index-city">
+			<h2>当前城市<span>北京</span><a class="city-close">×</a></h2>
+			<dl>
+				<dt>定位城市</dt>
+				<dd><a href="javascript:void(0);" >北京</a></dd>
+				<dt>最近访问城市</dt>
+				<dd><a href="javascript:void(0);" >北京</a><a href="javascript:void(0);" >黑龙江</a></dd>
+				<dt>全国医院分布<a href="javascript:void(0);"></a></dt>
+				<dd><a href="javascript:void(0);" >北京</a><a href="javascript:void(0);" >黑龙江</a><a href="javascript:void(0);" >山西</a><a href="javascript:void(0);" >陕西</a></dd>
+			</dl>
+		</div>
+		<!-- 选择城市结束 -->
+		<div class="index-more">
+			<ul>				
+				<li class="lis1"><a href="bwl.html"><span></span>备忘录</a></li>
+				<li class="lis2"><a href="yygh.html"><span></span>预约挂号</a></li>
+				<li class="lis3 no-border"><a href="wo.html"><span></span>我的消息</a></li>
+			</ul>
+		</div>
+		<!--中部 start-->
+		<div class="index-content">
+		<!-- 导航开始 -->
+			<nav>
+				<a href="dhzx.html" class="nav tel">
+					<span></span>
+					<p>电话咨询</p>
+				</a>
+				<a href="zxzx.html" class="nav online">
+					<span></span>
+					<p>在线咨询</p>
+				</a>
+				<a href="jktx.html" class="nav tixing">
+					<span></span>
+					<p>用药提醒</p>
+				</a>
+				<a href="yyys.html" class="nav yisheng">
+					<span></span>
+					<p>医院</p>
+				</a>
+				<a href="zxzx.html" class="nav index jiaoliu">
+					<span></span>
+					<p>实时交流</p>
+				</a>
+				<a href="bksq.html" class="nav yishi">
+					<span></span>
+					<p>健康饮食</p>
+				</a>
+				<a href="yplb.html" class="nav yaopinku">
+					<span></span>
+					<p>药品库</p>
+				</a>
+				<a href="yszy.html" class="nav mingyi">
+					<span></span>
+					<p>名医</p>
+				</a>
+			</nav>
+			<!-- 导航结束 -->
+			
+			<!--banner start-->
+			<div class="addWrap">
+				<div class="swipe" id="mySwipe">
+					<div class="swipe-wrap">
+						<div><a href="javascript:void(0);"><img class="img-responsive" src="images/banner/banner1.png" title="" alt="" /></a></div>
+						<div><a href="javascript:void(0);"><img class="img-responsive" src="images/banner/banner2.png" title="" alt="" /></a></div>
+						<div><a href="javascript:void(0);"><img class="img-responsive" src="images/banner/banner3.png" title="" alt="" /></a></div>
+					</div>
+				</div>
+				<ul id="position">
+					<li class="cur"></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+			<!--banner end-->
+			<article class="jieshao">
+				<h2>疾病介绍</h2>
+				<section class="clearfix">
+					<a href="bzjs.html" class="left">
+						<h3>脑瘫</h3>
+						<p>小儿大脑性瘫痪</p>
+					</a>
+					<div class="right">
+						<a   href="bzjs.html"  class="top">
+							<h3>癫痫</h3>
+							<p>大脑功能障碍<br/>的一种慢性疾病</p>
+						</a>
+						<a href="bzjs.html" class="btm">
+							<h3>肝脏</h3>
+							<p>人体消化系统中<br/>最大的消化腺</p>
+						</a>
+					</div>
+				</section>
+			</article>
+			<article class="zhixun">
+				<h2>健康咨询<a href="javascript:void(0);" class="more"></a></h2>
+				<ul class="item" id="template_item">
+					<li class="item-i" id="item_{{index}}">
+						<a href="bksq.html">
+							<img src="images/{{index}}.png">
+							<h3>{{h3}}</h3>
+							<p>{{p}}</p>
+							<p><span class="laiyuan">{{laiyuan}}</span><span class="day">{{riqi}}</span><span class="num"><em></em>次阅读</span></p>
+						</a>
+					</li>
+				</ul>				
+			</article>
+		</div>
+		<!--中部 end-->
+		
+		<!--底部 start-->
+		<footer class="position">
+			<a href="javascript:void(0)" class="nav index index-current current">
+				<span></span>
+				<p>首页</p>
+			</a>
+			<a href="zxzx.html" class="nav invest">
+				<span></span>
+				<p>提问</p>
+			</a>
+			<a href="bksq.html" class="nav account">
+				<span></span>
+				<p>发现</p>
+			</a>
+			<a href="wo.html" class="nav more">
+				<span></span>
+				<p>设置</p>
+			</a>
+		</footer>
+		<!--底部 end-->
+	</div>
+<script src='js/jquery-1.7.2.min.js' type="text/javascript"></script> 
+<script src='js/banner.js' type="text/javascript"></script> 
+<script src='js/index.js' type="text/javascript"></script>
+
+<script type="text/javascript">
+//banner图轮播
+var bullets = document.getElementById('position').getElementsByTagName('li');
+var banner = Swipe(document.getElementById('mySwipe'), {
+	auto: 2000,
+	continuous: true,
+	disableScroll:false,
+	callback: function(pos) {
+		var i = bullets.length;
+		while (i--) {
+			bullets[i].className = ' ';
+		}
+		bullets[pos].className = 'cur';
+	}
+});
+</script> 
+<script type="text/javascript">
+//咨询业动态替换
+// 1.创建变量
+var dataZixun = [
+	{img:'picture_1',
+	h3:'111宝宝轻度脑瘫能治疗吗',
+	p:'111脑瘫是一种很严重的神经科疾病，但是脑瘫病症有轻重之分...',
+	laiyuan:'人民网',
+	riqi:'2015-10-29'
+	},
+	{img:'icon_3@3x',
+	h3:'222宝宝轻度脑瘫能治疗吗',
+	p:'222脑瘫是一种很严重的神经科疾病，但是脑瘫病症有轻重之分...',
+	laiyuan:'新浪网',
+	riqi:'2014-10-22'
+	}
+]
+//2.通用函数
+var g = function(id){
+	if( id.substr(0,1) =='.'){
+		return document.getElementsByClassName(id.substr(1));
+	}
+	return document.getElementById(id);
+}
+//3.添加li的操作
+function addLi(){
+	//3.1获取模板
+	var tpl_item = g('template_item').innerHTML
+							.replace(/^\s*/,'')
+							.replace(/^\s*$/,'');
+	//3.2定义最终输出的html的变量
+	var out_item = [];	
+	//3.3遍历所有数据，构建最终输出的HTML
+	for( i in dataZixun){
+		var _html_item = tpl_item.replace(/{{index}}/g,dataZixun[i].img)
+								.replace(/{{h3}}/g,dataZixun[i].h3)
+								.replace(/{{p}}/g,dataZixun[i].p)
+								.replace(/{{laiyuan}}/g,dataZixun[i].laiyuan)
+								.replace(/{{riqi}}/g,dataZixun[i].riqi);
+		out_item.push(_html_item);
+
+	}
+	//3.4 把html回写道dom
+	g('template_item').innerHTML = out_item.join();		
+}
+//4.定义何时输出li
+window.onload = function(){
+	addLi();
+}
+//页面浏览次数
+if (localStorage.pagecount)
+	{
+	localStorage.pagecount=Number(localStorage.pagecount) +1;
+	}
+else
+	{
+	localStorage.pagecount=1;
+	}
+$('#template_item li em').html(localStorage.pagecount );
+</script> 
+</body>
+</html>

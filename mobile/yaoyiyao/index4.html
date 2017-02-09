@@ -1,0 +1,167 @@
+<!doctype html>
+<html id="html">
+<head>
+	<meta http-equiv="Content-Type" content="application/xhtml+xml;charset=UTF-8">
+	<meta http-equiv="Cache-Control" content="no-cache,must-revalidate">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta name="format-detection" content="telephone=no, address=no">
+	<meta name="viewport" id="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1, initial-scale=1.0,user-scalable=no" /> 
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style">
+	<title>摇一摇</title>
+<script>
+toSize();
+function toSize(){
+	var oHtml = document.getElementById("html");
+	var iW= oHtml.getBoundingClientRect().width;//oHtml.clientWidth;
+	console.log(iW);
+	oHtml.style.fontSize=iW/8+"px";
+}
+window.addEventListener("resize",
+	function(){
+		toSize();
+	},
+	false
+);
+window.addEventListener("orientationchange",
+	function(){
+		toSize();
+	},
+	false
+);
+</script>
+<style type="text/css">
+	body{
+		margin: 0;
+		background: #ccc;
+		background:url(img/bg.jpg) no-repeat;
+		background-size:100% 200px ;
+		background-position: center center;
+	}
+	html,body{
+		height: 100%;
+		position: relative;
+		width:100%;
+	}
+	.box{
+		height: 50%;
+	}
+	.header{
+		background: #008DDA;
+		/*transform: translateY(-100px) translateZ(0px);
+		-webkit-transform: translateY(-100px) translateZ(0px);*/
+		transition: all 0.4s;
+		-webkit-transition: all 0.4s;
+		background:url(img/yyy_top.png) no-repeat ;
+		background-size: 100% 100%;
+	}
+	.footer{
+		background: #00FF00;
+		/*transform: translateY(100px) translateZ(0px);
+		-webkit-transform: translateY(100px) translateZ(0px);*/
+		transition: all 0.4s;
+		-webkit-transition: all 0.4s;
+		background:url(img/yyy_btm.png) no-repeat ;
+		background-size:  100% 100%;
+		position:relative
+	}
+	#boxone{
+		position: absolute;
+		height: 2rem;
+		line-height: 2rem;
+		color: #ffec14;
+		font-size: 25px;
+		text-align: center;
+		width: 100%;
+		bottom: 1rem;
+		left: 0;
+		font-weight: 600;
+		transition: all 1s;
+		-webkit-transition: all 1s;
+		opacity: 1;
+	}
+</style>
+</head>
+<body>
+	<div class="header box" id="header"></div>
+	<div class="footer box" id="footer">
+		<div id="boxone">摇一摇奖品显示区域</div>
+	</div>
+	<audio  id="audio">
+    	<source src="yaoyiyao.mp3" >
+    </audio>
+</body>
+<script>
+window.onload = function(){
+	var arr = [
+		"您获得了100元现金",
+		"您获得了iphone6一部",
+		"您获得了洗衣机一台",
+		"谢谢参与",
+		"您获得了100元现金",
+		"您获得了ipad一部",
+		"不要灰心",
+		"谢谢参与",
+		"您获得了100元现金",
+		"您获得了电冰箱一台",
+		"不要灰心",
+		"不要灰心"
+	];
+	var header = document.getElementById('header');
+	var footer = document.getElementById('footer');
+	var boxone = document.getElementById('boxone');
+	var audio = document.getElementById('audio');
+	//css(btm,"translateY",100);
+	function gravityShake(callBack,calling){
+		var SHAKERANGE = 1500;
+		var lastX = 0;
+		var lastY = 0;
+		var lastZ = 0;
+		var lastTime = 0;
+		var isShanke = false;
+		window.addEventListener("devicemotion",fnShake,false);
+		function fnShake(e){
+			var acceleratio = e.accelerationIncludingGravity;
+			var nowTime = new Date().getTime();
+			var disTime = nowTime - lastTime; 
+			if(disTime > 100){
+				var x = acceleratio.x;
+				var y = acceleratio.y;
+				var z = acceleratio.z;
+				var speed = (x+y+z - lastX - lastY - lastZ)/disTime * 5000;
+				if(speed > SHAKERANGE){
+					calling&&calling();
+					isShanke = true;
+				}
+				if(isShanke&&speed<200){//停止后执行
+					isShanke = false;
+					callBack&&callBack();
+				}
+				lastX = x;
+				lastY = y;
+				lastZ = z;
+				lastTime = nowTime;
+			}
+		}
+	}
+	gravityShake(
+		function(){
+			audio.play();
+			header.style.WebkitTransform = header.style.transform = 'translateY(-100px)';
+			footer.style.WebkitTransform = footer.style.transform = 'translateY(100px)';
+			var random = Math.round(Math.random()*11);
+			setTimeout(function(){
+				header.style.WebkitTransform = header.style.transform = 'translateY(0px)';
+				footer.style.WebkitTransform = footer.style.transform = 'translateY(0px)';
+			},800);
+			boxone.style.display="none";
+			boxone.innerHTML=arr[random];
+			setTimeout(function(){
+				boxone.style.display="block";
+			},400);
+		}
+	);
+}
+</script>
+</html>

@@ -1,0 +1,227 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<title>3D切换</title>
+<script>
+setSize();
+window.addEventListener("resize",setSize,false);
+window.addEventListener("orientationchange",setSize,false);
+function setSize()
+{
+	var oHtml=document.getElementsByTagName("html")[0];
+	var iWidth=oHtml.getBoundingClientRect().width;
+	oHtml.style.fontSize=iWidth/16+"px";
+}
+</script>
+<script>
+document.addEventListener("touchmove",function(ev){
+	ev.preventDefault();
+},false);
+</script>
+<style id="css">
+html, body{
+	height: 100%;
+	overflow: hidden;
+}
+body {
+	margin: 0 auto;
+}
+.wrap {
+	width: 100%;
+	position: relative;
+	height: 100%;
+}
+#list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	height: 100%;
+	width: 100%;
+}	
+#list li {
+	width: 4rem;
+	float: left;
+	-webkit-perspective: 200px;
+	perspective: 200px;
+}
+#list div {
+	width: 100%;
+	height: 100%;
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	position: relative;
+	-webkit-transform:translateZ(-2rem);
+	transform: translateZ(-2rem);
+	/*
+		-webkit-transform-origin: center center -2rem;
+		transform-origin: center center -2rem;
+		IOS 下设置基点的话，会把图放大 导致图片拼接有问题;
+	
+	*/
+}
+#list div span {
+	position: absolute;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background-size: 400% 400% !important;
+}
+#list div span:nth-of-type(1) {
+	left: 0;
+	background: url(img/img1.jpeg) ;
+	-webkit-transform: translateZ(2rem);
+	transform: translateZ(2rem);
+}
+#list div span:nth-of-type(2) {
+	left: 100%;
+	background: url(img/img2.jpeg) ;
+	-webkit-transform-origin: left;
+	transform-origin: left;
+	-webkit-transform:translateZ(2rem)  rotateY(90deg);
+	transform: translateZ(2rem) rotateY(90deg);
+}
+
+#list div span:nth-of-type(3) {
+	left: 0;
+	background: url(img/img3.jpeg) ;
+	-webkit-transform: translateZ(-2rem) rotateY(180deg);
+	transform: translateZ(-2rem) rotateY(180deg);
+}
+#list div span:nth-of-type(4) {
+	left: -100%;
+	background: url(img/img4.jpeg) ;
+	-webkit-transform-origin: right;
+	transform-origin: right;
+	-webkit-transform:translateZ(2rem)  rotateY(-90deg);
+	transform: translateZ(2rem)  rotateY(-90deg);
+}
+#navs {
+	position: absolute;
+	left: 0;
+	right: 0;
+	height: 20px;
+	bottom: 0px;
+	text-align: center;
+	padding: 10px;
+	background: rgba(0, 0, 0, 0.6);
+	z-index: 20;
+}
+#navs a {
+	width: 20px;
+	height: 20px;
+	background: #fff;
+	display: inline-block;
+	margin: 0 5px;
+	border-radius: 10px;
+}
+#navs .active {
+	background: #0CC;
+}
+#img {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 10;
+}
+/*
+#list li:nth-of-type(1) span {
+	
+}
+#list li:nth-of-type(2) span {
+	
+}*/
+</style>
+<script src="css.js"></script>
+<script>
+var arr = ["img/img1.jpeg","img/img2.jpeg","img/img3.jpeg","img/img4.jpeg"];
+window.onload = function(){
+	toLayout();
+	var img = document.getElementById("img");
+	var list = document.getElementById("list");
+	var navs = document.getElementById("navs");
+	var aA = document.querySelectorAll("#navs a");
+	var aLength = aA.length;
+	var div = document.querySelectorAll("#list div");
+	var now = 0;
+	$(img).swipeLeft(
+		function(){
+			now++;
+			img.style.opacity = 0;
+			img.src = arr[now%arr.length];
+			for(var i = 0; i < div.length; i++){
+				div[i].style.transition = ".5s";
+				div[i].style.WebkitTransform = div[i].style.transform = "translateZ(-2rem) rotateY("+(-now*90)+"deg) ";
+			}
+			end();
+			tabNav()
+		}
+	);
+	$(img).swipeRight(
+		function(){
+			now--;
+			img.style.opacity = 0;
+			img.src = arr[now%arr.length];
+			for(var i = 0; i < div.length; i++){
+				div[i].style.transition = ".5s";
+				div[i].style.WebkitTransform = div[i].style.transform = "translateZ(-2rem) rotateY("+(-now*90)+"deg) ";
+			}
+			end();
+			tabNav()
+		}
+	);
+	//滑动到第几张图片函数
+	function tabNav(){
+
+		var show = now%aLength;
+		show= show<0? (show + aLength) : show;
+		for(var i=0; i<aLength; i++){
+			aA[i].className="";
+		};
+		aA[show].className="active";
+	};
+	function end(){
+		div[div.length-1].addEventListener("transitionend",fn,false);
+		div[div.length-1].addEventListener("WebkitTransitionEnd",fn,false);
+		function fn(){
+			img.style.opacity = 1;
+			div[div.length-1].removeEventListener("transitionend",fn,false);
+			div[div.length-1].removeEventListener("WebkitTransitionEnd",fn,false);
+		}
+	}
+};
+function toLayout(){
+	var list = document.getElementById("list");
+	var css = document.getElementById("css");
+	var oHtml=document.getElementsByTagName("html")[0];
+	var liH=oHtml.getBoundingClientRect().height/4;
+	var str = "";
+	var style = "";
+	for(var i = 0; i < 16; i++){
+		str += "<li><div><span></span><span></span><span></span><span></span></div></li>";
+		style += "#list li:nth-of-type("+(i+1)+") span { background-position: -"+(i%4)*4+"rem  -"+parseInt(i/4)*liH+"px; }";
+	}
+	style += "#list li{height:"+liH+"px}"
+	css.innerHTML += style;
+	list.innerHTML = str;
+}
+</script>
+</head>
+<body>
+<section class="wrap">
+	<img src="img/img1.jpeg" id="img" />
+	<ul id="list">
+    	
+    </ul>
+    <nav id="navs">
+    	<a href="javascript:;" class="active"></a>
+        <a href="javascript:;"></a>
+        <a href="javascript:;"></a>
+        <a href="javascript:;"></a>
+    </nav>
+</section>
+</body>
+</html>

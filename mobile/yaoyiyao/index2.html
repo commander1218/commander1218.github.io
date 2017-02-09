@@ -1,0 +1,162 @@
+<!doctype html>
+<html id="html">
+<head>
+	<meta http-equiv="Content-Type" content="application/xhtml+xml;charset=UTF-8">
+	<meta http-equiv="Cache-Control" content="no-cache,must-revalidate">
+	<meta http-equiv="pragma" content="no-cache">
+	<meta http-equiv="expires" content="0">
+	<meta name="format-detection" content="telephone=no, address=no">
+	<meta name="viewport" id="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1, initial-scale=1.0,user-scalable=no" /> 
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black-translucent" name="apple-mobile-web-app-status-bar-style">
+	<title>大转轮</title>
+<script>
+toSize();
+function toSize(){
+	var oHtml = document.getElementById("html");
+	var iW= oHtml.getBoundingClientRect().width;//oHtml.clientWidth;
+	console.log(iW);
+	oHtml.style.fontSize=iW/16+"px";
+}
+window.addEventListener("resize",
+	function(){
+		toSize();
+	},
+	false
+);
+window.addEventListener("orientationchange",
+	function(){
+		toSize();
+	},
+	false
+);
+</script>
+<style>
+body{
+	margin: 0;
+	background: #ccc;
+	background:url(img/zhuanlun.png) no-repeat ;
+	background-size:  100% 100%;
+	position: relative;
+}
+html,body{
+	height: 100%;
+	position: relative;
+	width:100%;
+}
+#boxone{
+	height: 2rem;
+	line-height: 2rem;
+	color: #ffec14;
+	font-size: 25px;
+	text-align: center;
+	margin-top: 6rem;
+	font-weight: 600;
+}
+#wrap{
+	width: 300px;
+	height: 300px;	
+	margin: 0 auto ;
+	position: relative;
+	overflow: hidden;
+}
+#box {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	background: url(img/zhuanpan.png) no-repeat;
+	background-size: cover;
+}
+#active {
+	width: 42px;
+	height: 98px;
+	background: url(img/pointer.png) no-repeat;
+	position: absolute;
+	left: 129px;
+	top: 52px;
+}
+
+#btn {
+	width: 154px;
+	height: 154px;
+	position: absolute;
+	background: url(img/round_start.png) no-repeat;
+	background-size: contain;
+    left: 71px;
+    top: 75px;
+	border-radius: 50px;
+}
+#btn.active {
+	background-image:url(img/round_end.png);
+}
+</style>
+<script src="miaovTouch.js"></script>
+<script>
+var arr = [
+	"100元现金",
+	"iphone6",
+	"洗衣机",
+	"100元现金",
+	"100元现金",
+	"ipad",
+	"100元现金",
+	"谢谢参与",
+	"100元现金",
+	"电冰箱",
+	"100元现金",
+	"不要灰心"
+];
+window.onload  = function(){
+	var box = document.getElementById("box");
+	var boxone = document.getElementById("boxone");
+	var btn = document.getElementById("btn");
+	var timer = 0;
+	//var target = -2;
+	var random = Math.round(Math.random()*11);
+	var target=random;
+	var deg = 30;
+	btn.addEventListener("touchend",start,false);
+	function start(){
+		console.log(random,arr[random]);
+		btn.removeEventListener("touchend",start,false);
+		btn.addEventListener("touchend",stop,false);
+		btn.className = "active";
+		timer = setInterval(
+			function(){
+				var rotate = css(box,"rotate");
+				rotate += 10;
+				css(box,"rotate",rotate);
+				console.log(css(box,"rotate"));
+			},
+			25
+		);
+	}
+	function stop(){
+		btn.className = "";
+		btn.removeEventListener("touchend",stop,false);
+		clearInterval(timer);
+		console.log(css(box,"rotate"));
+		var R =   parseInt(css(box,"rotate") / 360);
+		var targetDeg = (R+2)*360+(deg*(12-target));
+		//console.log(targetDeg);
+		mTween(box,{rotate:targetDeg },7000,"easeOutStrong",function(){
+			boxone.innerHTML = "您获得了"+arr[random];
+			random = Math.round(Math.random()*11);
+			target=random;
+			btn.addEventListener("touchend",start,false);
+		});
+	}
+};
+</script>
+</head>
+<body>
+<div id="boxone">您的获奖信息</div>
+<div id="wrap">
+	<div id="box"></div>
+	<div id="active"></div>
+    <span id="btn"></span>
+</div>  
+</body>
+</html>

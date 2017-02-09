@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,user-scalable=no" />
+<title>转盘抽奖</title>
+<style>
+body {
+	margin: 0;
+}
+ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#wrap {
+	width: 300px;
+	height: 300px;
+	position: relative;
+	margin: 30px auto;
+}
+#list li {
+	position: absolute;
+	width: 98px;
+	height: 98px;
+	text-align: center;
+	font: 40px/98px "微软雅黑";
+	color: #ff0000;
+	background: #ffda12;
+	border: 1px solid #ff0000;
+	-webkit-filter: blur(0.5px);
+	filter: blur(0.5px);
+} 
+#list .active {
+	-webkit-filter: blur(0px);
+	filter: blur(0px);
+	background: #db314a;
+	color: #fff;
+}
+.btn {
+	width: 98px;
+	height: 98px;
+	border-radius: 50%;
+	border: 1px solid #999;
+	position: absolute;
+	left: 100px;
+	top: 100px;
+	background: #fef26b;
+	text-align: center;
+	line-height: 100px;
+	font-size: 20px;
+	text-decoration: none;
+	color: #e84144;
+	font-weight: bold;
+}
+	#boxone{
+		position: absolute;
+		height: 2rem;
+		line-height: 2rem;
+		color: #rgba(0,0,0,.9);
+		font-size: 25px;
+		text-align: center;
+		width: 100%;
+		bottom: 2rem;
+		left: 0;
+		font-weight: 600;
+	}
+</style>
+<script>
+window.onload = function (){
+	layout();
+	var li = document.querySelectorAll("#list li");
+	var btn = document.querySelector(".btn");
+	var boxone = document.getElementById("boxone");
+	var timer = 0;
+	var now = -1;
+	var target = 4;
+	var inerval = 100;
+	var nub = 40;
+	btn.addEventListener(
+		"touchend",
+		start,
+		false
+	);
+	function start() {
+		btn.removeEventListener("touchend",start,false);
+		btn.innerHTML = "停止";
+		boxone.innerHTML="开始抽奖";
+		btn.addEventListener("touchend",stop,false);
+		timer = setInterval(move,inerval);
+	}
+	function stop(){
+		btn.removeEventListener("touchend",stop,false);
+		clearInterval(timer);
+		var random = Math.round(Math.random()*2);
+		//console.log(random);
+		var arr=[2,5,8];
+		var target=arr[random];
+		console.log(target);
+		var n = ( target-now%li.length);
+		n = n<0? (n+li.length):n;
+		n+=li.length*2;
+		inerval = 200;
+		for(var i =0; i<n-2;i++){
+			setTimeout(move,(i+1)*inerval+nub);
+			nub *= 1.24;
+		}
+		setTimeout(function(){
+				move(function(){
+					boxone.innerHTML="恭喜您中了"+target+"等奖";
+					btn.innerHTML = "开始";
+					now=now%li.length;
+					nub = 40;
+					inerval = 150;
+					btn.addEventListener(
+						"touchend",
+						start,
+						false
+					);
+				});
+			},
+			(i+1)*inerval+nub+100
+		);
+	}
+	function move(fn){
+		now++;
+		for(var i=0; i<li.length;i++){
+			li[i].className="";
+		}
+		li[now%li.length].className="active";
+		setTimeout(function(){
+			fn&&fn();
+		},400)
+		
+	}
+};
+function layout(){
+	var li = document.querySelectorAll("#list li");
+	var top = 0;
+	var left = 0;
+	for(var i = 0; i < li.length; i++){
+		li[i].style.left = left + "px";
+		li[i].style.top = top + "px";
+		if(i<2){
+			left += 100;	
+		} else if (i >= 2 && i<4){
+			top += 100;
+		}else if(i>=4 && i<6){
+			left -= 100;
+		} else {
+			top -= 100;
+		}
+	}
+}
+</script>
+</head>
+<body>
+<div id="wrap">
+    <ul id="list">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+        <li>6</li>
+        <li>7</li>
+        <li>8</li>
+    </ul>
+    <a href="#" class="btn">开始抽奖</a>
+</div>  
+<div id="boxone">您的获奖信息</div>
+</body>
+</html>

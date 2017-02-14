@@ -1,0 +1,80 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script src="mTween.js" type="text/javascript" charset="utf-8"></script>
+<script src="jquery-3.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+<style>
+	.box{
+		width: 500px;
+		height: 300px;
+		border: 5px solid black;
+		margin: 100px auto;
+		position: relative;
+	}
+	.box div {
+		position: relative;
+		width: 50px;
+		height: 50px;
+		border: 1px solid #000;
+	}
+	.div1{
+		background: red;
+		z-index: 2;
+	}
+	.div2{
+		background: yellow;
+		z-index: 1;
+	}
+</style>
+</head>
+
+<body>
+	<div class="box">
+		<div class="div1"></div>
+		<div class="div2"></div>
+	</div>
+</body>
+<script type="text/javascript">
+	(function(){
+		var box = document.querySelector(".box");
+		var div1 = document.querySelector(".div1");
+		var div2 = document.querySelector(".div2");
+		var timer = 0;
+		
+		box.onmousemove = function(ev){
+			var l = ev.pageX - 470;
+			var t = ev.pageY - 100;
+	
+			if(l < 0){
+				l = 0;
+			}
+			if(l > 450){
+				l = 450
+			}
+			if(t < 0){
+				t = 0;
+			}
+			if(t > 250){
+				t = 250
+			}
+//			timer = setInterval(function(){
+//				if(l != oldL){
+//					mTween(div1,{left:l,top:t},200,'elasticOut',function(){
+//						mTween(div2,{left:l,top:t - 52},200,'elasticOut')
+//					})
+//				}
+//			},10)
+			div1.style.left = l + "px";
+			div1.style.top = t + "px";
+			setTimeout(function(){
+				div2.style.left = l + "px";
+				div2.style.top = t-52 + "px";
+			},200)
+		}
+		
+		
+	})()
+</script>
+</html>
